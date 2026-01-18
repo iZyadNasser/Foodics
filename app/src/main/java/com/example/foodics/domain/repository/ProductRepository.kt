@@ -1,0 +1,13 @@
+package com.example.foodics.domain.repository
+
+import com.example.foodics.domain.entity.Product
+import kotlinx.coroutines.flow.Flow
+import java.util.UUID
+
+interface ProductRepository {
+    suspend fun getProducts(searchQuery: String?, categoryId: UUID): List<Product>
+    suspend fun addProductToCart(productId: UUID): Boolean
+    suspend fun clearCartProducts(): Boolean
+    fun getProductsCountInCart(): Flow<Int>
+    fun getTotalProductsPriceInCart(): Flow<Double>
+}
