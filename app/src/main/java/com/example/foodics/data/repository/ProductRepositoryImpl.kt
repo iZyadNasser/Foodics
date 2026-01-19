@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 class ProductRepositoryImpl : ProductRepository {
-    override suspend fun getProducts(
-        searchQuery: String?,
-        categoryId: UUID
-    ): List<Product> {
+    override suspend fun getProducts(searchQuery: String?, categoryId: UUID): List<Product> {
         TODO("Not yet implemented")
     }
 
