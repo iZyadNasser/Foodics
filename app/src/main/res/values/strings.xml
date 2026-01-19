@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Foodics</string>
+    <string name="tables">Tables</string>
+    <string name="back">Back</string>
+    <string name="users">Users</string>
+    <string name="view_order">View order</string>
+    <string name="sar">SAR %1$s</string>
+    <string name="search_bar_hint">Search for products or categories</string>
+    <string name="search">Search</string>
 </resources>

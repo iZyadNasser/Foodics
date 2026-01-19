@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.2"
+coilCompose = "2.7.0"
 kotlin = "2.0.21"
 coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
@@ -18,7 +19,9 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 # Koin
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-core = { module = "io.insert-koin:koin-core" }
