@@ -9,6 +9,7 @@
     <string name="search">Search</string>
     <string name="alert">Alert</string>
     <string name="success">Success</string>
+    <string name="cart_updated">Cart updated</string>
     <string name="error">Error</string>
     <string name="error_not_found">No data found</string>
     <string name="error_no_internet">No internet, please check your connection</string>

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.foodics.R
 import com.example.foodics.ui.LocalErrorAlert
 import com.example.foodics.ui.LocalSuccessAlert
 import com.example.foodics.ui.util.ObserveAsEffect
@@ -24,6 +25,10 @@ fun TablesRoot(
         when (effect) {
             is TablesScreenEffect.ShowError -> {
                 errorAlertState.show(effect.message.asString(context))
+            }
+
+            TablesScreenEffect.ShowCartUpdatedSuccess -> {
+                successAlertState.show(context.getString(R.string.cart_updated))
             }
         }
     }

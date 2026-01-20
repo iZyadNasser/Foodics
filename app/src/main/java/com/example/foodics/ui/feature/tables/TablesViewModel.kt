@@ -140,6 +140,7 @@ class TablesViewModel(
                 screenState.value.products.find { it.id == productId }
                     ?.let { productUseCaseManager.toggleProductInCart(it) } ?: false
             },
+            onSuccess = { sendEffect(TablesScreenEffect.ShowCartUpdatedSuccess) },
             onError = ::handleError
         )
     }
