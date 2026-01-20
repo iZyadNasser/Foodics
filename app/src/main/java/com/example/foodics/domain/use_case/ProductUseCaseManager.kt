@@ -11,7 +11,8 @@ class ProductUseCaseManager(
         return productRepository.getProducts(searchQuery = searchQuery, categoryId = categoryId)
     }
 
-    suspend fun addProductToCart(productId: UUID) = productRepository.addProductToCart(productId)
+    suspend fun toggleProductInCart(product: Product) =
+        productRepository.toggleProductInCart(product)
 
     suspend fun clearCartProducts() = productRepository.clearCartProducts()
 

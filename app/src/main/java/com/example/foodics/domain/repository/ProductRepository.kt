@@ -6,7 +6,7 @@ import java.util.UUID
 
 interface ProductRepository {
     suspend fun getProducts(searchQuery: String?, categoryId: UUID): List<Product>
-    suspend fun addProductToCart(productId: UUID): Boolean
+    suspend fun toggleProductInCart(product: Product): Boolean
     suspend fun clearCartProducts(): Boolean
     fun getProductsCountInCart(): Flow<Int>
     fun getTotalProductsPriceInCart(): Flow<Double>
