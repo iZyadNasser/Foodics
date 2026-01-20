@@ -1,4 +1,4 @@
-package com.example.foodics.ui.theme
+package com.example.foodics.ui.design_system
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

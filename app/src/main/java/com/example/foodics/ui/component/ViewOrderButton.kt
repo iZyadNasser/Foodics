@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.foodics.R
 import com.example.foodics.ui.component.modifier.noRippleClickable
-import com.example.foodics.ui.theme.PrimaryPurple
+import com.example.foodics.ui.design_system.PrimaryPurple
 import java.util.Locale
 
 @Composable

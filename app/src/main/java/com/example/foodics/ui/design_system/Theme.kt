@@ -1,6 +1,5 @@
-package com.example.foodics.ui.theme
+package com.example.foodics.ui.design_system
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

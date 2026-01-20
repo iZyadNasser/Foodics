@@ -6,9 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.foodics.ui.design_system.FoodicsTheme
 import com.example.foodics.ui.feature.tables.TablesScreen
 import com.example.foodics.ui.feature.tables.TablesViewModel
-import com.example.foodics.ui.theme.FoodicsTheme
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
