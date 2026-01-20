@@ -12,9 +12,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,7 +48,8 @@ fun ProductCard(
             AsyncImage(
                 model = product.imageUrl,
                 contentDescription = product.name,
-                // TODO: add default
+                error = painterResource(R.drawable.default_placeholder),
+                placeholder = painterResource(R.drawable.default_placeholder),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
@@ -87,7 +90,8 @@ fun ProductCard(
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.align(Alignment.End)
                 )
             }
         }
