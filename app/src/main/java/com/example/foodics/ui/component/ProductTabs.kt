@@ -31,7 +31,7 @@ fun CategoryTabs(
         modifier = modifier,
         edgePadding = 16.dp,
         divider = { },
-        indicator = @Composable {
+        indicator = {
             TabRowDefaults.PrimaryIndicator(
                 Modifier.tabIndicatorOffset(selectedCategoryIndex, matchContentSize = true),
                 width = Dp.Unspecified,
