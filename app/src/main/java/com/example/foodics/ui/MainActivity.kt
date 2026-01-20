@@ -16,7 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.foodics.ui.design_system.FoodicsTheme
-import com.example.foodics.ui.feature.tables.TablesRoot
+import com.example.foodics.ui.navigation.AppNavigation
 import com.example.foodics.ui.util.alert.AlertState
 import com.example.foodics.ui.util.alert.AppAlert
 
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     LocalSuccessAlert provides successAlertState,
                     LocalErrorAlert provides errorAlertState
                 ) {
-                    TablesRoot()
+                    AppNavigation()
                     Alerts()
                 }
             }
