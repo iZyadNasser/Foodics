@@ -46,7 +46,6 @@ import java.util.UUID
 fun TablesScreen(
     screenState: TablesScreenState,
     interactionListener: TablesInteractionListener,
-    modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
@@ -62,7 +61,7 @@ fun TablesScreen(
                 modifier = Modifier.padding(bottom = 12.dp)
             )
         },
-        modifier = modifier
+        modifier = Modifier
     ) { paddingValues ->
         Column(
             modifier = Modifier

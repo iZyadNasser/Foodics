@@ -7,6 +7,7 @@ import com.example.foodics.domain.entity.Product
 import com.example.foodics.domain.use_case.GetCategoriesUseCase
 import com.example.foodics.domain.use_case.ProductUseCaseManager
 import com.example.foodics.ui.base.BaseViewModel
+import com.example.foodics.ui.util.toUiText
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -152,7 +153,7 @@ class TablesViewModel(
 
     private fun handleError(throwable: Throwable) {
         Log.e(LOG_TAG, "catchError: $throwable")
-        // TODO: Map throwable to error messages
+        sendEffect(TablesScreenEffect.ShowError(throwable.toUiText()))
         stopLoading()
     }
 

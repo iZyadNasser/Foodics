@@ -7,4 +7,7 @@
     <string name="sar">SAR %1$s</string>
     <string name="search_bar_hint">Search for products or categories</string>
     <string name="search">Search</string>
+    <string name="error_not_found">No data found</string>
+    <string name="error_no_internet">No internet, please check your connection</string>
+    <string name="error_unknown">Something went wrong, try again later</string>
 </resources>
