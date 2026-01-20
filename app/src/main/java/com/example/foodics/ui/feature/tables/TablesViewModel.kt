@@ -1,10 +1,19 @@
 package com.example.foodics.ui.feature.tables
 
+import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.example.foodics.domain.entity.Category
 import com.example.foodics.domain.entity.Product
 import com.example.foodics.domain.use_case.GetCategoriesUseCase
 import com.example.foodics.domain.use_case.ProductUseCaseManager
 import com.example.foodics.ui.base.BaseViewModel
+import com.example.foodics.ui.util.toUiText
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class TablesViewModel(
@@ -15,12 +24,13 @@ class TablesViewModel(
 
     init {
         loadInitialData()
-        // TODO: Add listeners for (search, order count, order total price)
+        listenToCount()
+        listenToTotal()
     }
 
     private fun loadInitialData() {
         getCategories(
-            callback = ::getProducts
+            callback = ::listenToSearch
         )
     }
 
@@ -44,6 +54,19 @@ class TablesViewModel(
         }
     }
 
+    @OptIn(FlowPreview::class)
+    private fun listenToSearch() {
+        viewModelScope.launch {
+            screenState
+                .map { it.searchQuery.trim() }
+                .debounce(DEBOUNCE_MS)
+                .distinctUntilChanged()
+                .collectLatest {
+                    getProducts()
+                }
+        }
+    }
+
     private fun getProducts() {
         tryToCall(
             block = {
@@ -56,6 +79,7 @@ class TablesViewModel(
             },
             onSuccess = ::handleGetProductsSuccess,
             onError = ::handleError,
+            onStart = ::startLoading,
             onEnd = ::stopLoading
         )
     }
@@ -65,6 +89,30 @@ class TablesViewModel(
             it.copy(
                 products = products
             )
+        }
+    }
+
+    private fun listenToCount() {
+        viewModelScope.launch {
+            productUseCaseManager.getProductsCountInCart().collectLatest { count ->
+                updateState {
+                    it.copy(
+                        numberOfProductsInCart = count
+                    )
+                }
+            }
+        }
+    }
+
+    private fun listenToTotal() {
+        viewModelScope.launch {
+            productUseCaseManager.getTotalProductsPriceInCart().collectLatest { total ->
+                updateState {
+                    it.copy(
+                        totalPriceOfCart = total
+                    )
+                }
+            }
         }
     }
 
@@ -82,19 +130,40 @@ class TablesViewModel(
                 chosenCategoryId = categoryId
             )
         }
+
+        getProducts()
     }
 
     override fun onProductClick(productId: UUID) {
-        TODO("Not yet implemented")
+        tryToCall(
+            block = {
+                screenState.value.products.find { it.id == productId }
+                    ?.let { productUseCaseManager.toggleProductInCart(it) } ?: false
+            },
+            onSuccess = { sendEffect(TablesScreenEffect.ShowCartUpdatedSuccess) },
+            onError = ::handleError
+        )
     }
 
     override fun onViewOrderClick() {
-        TODO("Not yet implemented")
+        tryToCall(
+            block = { productUseCaseManager.clearCartProducts() },
+            onError = ::handleError
+        )
     }
 
     private fun handleError(throwable: Throwable) {
-        // TODO: Map throwable to error messages
+        Log.e(LOG_TAG, "catchError: $throwable")
+        sendEffect(TablesScreenEffect.ShowError(throwable.toUiText()))
         stopLoading()
+    }
+
+    private fun startLoading() {
+        updateState {
+            it.copy(
+                isLoading = true
+            )
+        }
     }
 
     private fun stopLoading() {
@@ -103,5 +172,10 @@ class TablesViewModel(
                 isLoading = false
             )
         }
+    }
+
+    companion object {
+        private const val LOG_TAG = "TablesViewModel"
+        private const val DEBOUNCE_MS = 300L
     }
 }
