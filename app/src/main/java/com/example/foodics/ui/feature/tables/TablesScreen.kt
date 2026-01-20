@@ -59,7 +59,7 @@ fun TablesScreen(
                 numberOfProducts = screenState.numberOfProductsInCart,
                 totalPrice = screenState.totalPriceOfCart,
                 onClick = interactionListener::onViewOrderClick,
-                modifier = Modifier.padding(bottom = 4.dp)
+                modifier = Modifier.padding(bottom = 12.dp)
             )
         },
         modifier = modifier
