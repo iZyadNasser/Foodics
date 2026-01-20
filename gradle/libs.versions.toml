@@ -6,6 +6,7 @@ coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.2"
 composeBom = "2026.01.00"
+composeNavigation = "2.9.6"
 koinBom = "4.1.1"
 
 [libraries]
@@ -20,6 +21,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 # Koin
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
