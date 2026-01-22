@@ -1,4 +1,4 @@
-package com.example.foodics.data
+package com.example.foodics.data.repository.fake
 
 import com.example.foodics.domain.entity.Category
 import com.example.foodics.domain.entity.Product

@@ -1,6 +1,5 @@
-package com.example.foodics.data.repository
+package com.example.foodics.data.repository.fake
 
-import com.example.foodics.data.FakeProductData
 import com.example.foodics.domain.entity.Category
 import com.example.foodics.domain.repository.CategoryRepository
 
