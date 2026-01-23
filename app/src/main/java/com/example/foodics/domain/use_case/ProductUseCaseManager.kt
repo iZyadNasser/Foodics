@@ -7,7 +7,11 @@ import java.util.UUID
 class ProductUseCaseManager(
     private val productRepository: ProductRepository
 ) {
-    suspend fun getProducts(searchQuery: String?, categoryId: UUID): List<Product> {
+    suspend fun getProducts(
+        searchQuery: String?,
+        categoryId: UUID,
+        isFirstFetch: Boolean = false
+    ): List<Product> {
         return productRepository.getProducts(searchQuery = searchQuery, categoryId = categoryId)
     }
 

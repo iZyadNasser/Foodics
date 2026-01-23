@@ -5,5 +5,6 @@ import com.example.foodics.domain.repository.CategoryRepository
 class GetCategoriesUseCase(
     private val categoryRepository: CategoryRepository
 ) {
-    suspend operator fun invoke() = categoryRepository.getCategories()
+    suspend operator fun invoke(isFirstFetch: Boolean = false) =
+        categoryRepository.getCategories(isFirstFetch)
 }

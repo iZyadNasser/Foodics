@@ -1,12 +1,12 @@
-package com.example.foodics.data.repository
+package com.example.foodics.data.repository.product
 
 import com.example.foodics.data.local.dao.CartDao
 import com.example.foodics.data.local.dao.CategoryDao
 import com.example.foodics.data.local.dao.ProductDao
 import com.example.foodics.data.local.entity.CartItemEntity
-import com.example.foodics.data.local.entity.CategoryEntity
 import com.example.foodics.data.local.entity.ProductEntity
-import com.example.foodics.domain.entity.Category
+import com.example.foodics.data.repository.mapper.toDomain
+import com.example.foodics.data.repository.mapper.toProductEntity
 import com.example.foodics.domain.entity.Product
 import com.example.foodics.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,19 +15,35 @@ import java.util.UUID
 class ProductRepositoryImpl(
     private val productDao: ProductDao,
     private val categoryDao: CategoryDao,
-    private val cartDao: CartDao
+    private val cartDao: CartDao,
+    private val productRemoteDataSource: ProductRemoteDataSource
 ) : ProductRepository {
-
-    override suspend fun getProducts(searchQuery: String?, categoryId: UUID): List<Product> {
-        val products = productDao.getProductsByCategoryAndSearch(
-            categoryId = categoryId.toString(),
-            searchQuery = searchQuery ?: ""
-        )
+    override suspend fun getProducts(
+        searchQuery: String?,
+        categoryId: UUID,
+        isFirstFetch: Boolean
+    ): List<Product> {
+        val products = if (isFirstFetch) {
+            fetchRemoteProductsAsEntities()
+        } else {
+            productDao.getProductsByCategoryAndSearch(
+                categoryId = categoryId.toString(),
+                searchQuery = searchQuery ?: ""
+            ).ifEmpty {
+                fetchRemoteProductsAsEntities()
+            }
+        }
 
         return products.map { product ->
             val category = categoryDao.getAllCategories()
                 .first { it.id == product.categoryId }
-            product.toDomainModel(category.toDomainModel())
+            product.toDomain(category.toDomain())
+        }
+    }
+
+    private suspend fun fetchRemoteProductsAsEntities(): List<ProductEntity> {
+        return productRemoteDataSource.getProducts().map { it.toProductEntity() }.also {
+            productDao.insertProducts(it)
         }
     }
 
@@ -52,25 +68,5 @@ class ProductRepositoryImpl(
 
     override fun getTotalProductsPriceInCart(): Flow<Double> {
         return cartDao.getTotalPrice()
-    }
-
-    private fun ProductEntity.toDomainModel(
-        category: Category
-    ): Product {
-        return Product(
-            id = UUID.fromString(this.id),
-            name = this.name,
-            category = category,
-            description = this.description,
-            imageUrl = this.imageUrl,
-            price = this.price
-        )
-    }
-
-    private fun CategoryEntity.toDomainModel(): Category {
-        return Category(
-            id = UUID.fromString(this.id),
-            name = this.name
-        )
     }
 }

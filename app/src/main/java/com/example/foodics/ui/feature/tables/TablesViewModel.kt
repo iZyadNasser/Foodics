@@ -36,7 +36,11 @@ class TablesViewModel(
 
     private fun getCategories(callback: () -> Unit) {
         tryToCall(
-            block = { getCategoriesUseCase() },
+            block = {
+                getCategoriesUseCase(
+                    isFirstFetch = true, // TODO
+                )
+            },
             onSuccess = { categories ->
                 handleGetCategoriesSuccess(categories)
                 callback()
@@ -73,7 +77,8 @@ class TablesViewModel(
                 screenState.value.chosenCategoryId?.let { categoryId ->
                     productUseCaseManager.getProducts(
                         searchQuery = screenState.value.searchQuery,
-                        categoryId = categoryId
+                        categoryId = categoryId,
+                        isFirstFetch = true // TODO
                     )
                 } ?: emptyList()
             },

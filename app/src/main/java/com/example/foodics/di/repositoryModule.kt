@@ -1,7 +1,7 @@
 package com.example.foodics.di
 
-import com.example.foodics.data.repository.CategoryRepositoryImpl
-import com.example.foodics.data.repository.ProductRepositoryImpl
+import com.example.foodics.data.repository.category.CategoryRepositoryImpl
+import com.example.foodics.data.repository.product.ProductRepositoryImpl
 import com.example.foodics.domain.repository.CategoryRepository
 import com.example.foodics.domain.repository.ProductRepository
 import org.koin.core.module.dsl.singleOf
