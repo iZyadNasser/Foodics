@@ -38,7 +38,7 @@ class TablesViewModel(
         tryToCall(
             block = {
                 getCategoriesUseCase(
-                    isFirstFetch = true, // TODO
+                    isFirstFetch = screenState.value.isFirstFetch,
                 )
             },
             onSuccess = { categories ->
@@ -78,7 +78,7 @@ class TablesViewModel(
                     productUseCaseManager.getProducts(
                         searchQuery = screenState.value.searchQuery,
                         categoryId = categoryId,
-                        isFirstFetch = true // TODO
+                        isFirstFetch = screenState.value.isFirstFetch
                     )
                 } ?: emptyList()
             },
@@ -92,7 +92,8 @@ class TablesViewModel(
     private fun handleGetProductsSuccess(products: List<Product>) {
         updateState {
             it.copy(
-                products = products
+                products = products,
+                isFirstFetch = false
             )
         }
     }

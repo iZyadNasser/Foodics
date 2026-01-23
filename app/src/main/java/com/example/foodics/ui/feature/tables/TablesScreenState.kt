@@ -11,5 +11,6 @@ data class TablesScreenState(
     val chosenCategoryId: UUID? = null,
     val products: List<Product> = emptyList(),
     val numberOfProductsInCart: Int = 0,
-    val totalPriceOfCart: Double = 0.0
+    val totalPriceOfCart: Double = 0.0,
+    val isFirstFetch: Boolean = true,
 )
