@@ -6,6 +6,6 @@ import com.example.foodics.data.remote.dto.CategoryDto
 fun CategoryDto.toCategoryEntity(): CategoryEntity {
     return CategoryEntity(
         id = this.id,
-        name = this.name ?: "",
+        name = this.name.orEmpty(),
     )
 }

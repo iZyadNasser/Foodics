@@ -6,10 +6,10 @@ import com.example.foodics.data.remote.dto.ProductDto
 fun ProductDto.toProductEntity(): ProductEntity {
     return ProductEntity(
         id = this.id,
-        name = this.name ?: "",
-        description = this.description ?: "",
+        name = this.name.orEmpty(),
+        description = this.description.orEmpty(),
         price = this.price ?: 0.0,
-        imageUrl = this.image ?: "",
-        categoryId = this.category?.id ?: ""
+        imageUrl = this.image.orEmpty(),
+        categoryId = this.category?.id.orEmpty()
     )
 }

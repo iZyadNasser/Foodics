@@ -19,4 +19,15 @@ interface CategoryDao {
 
     @Query("DELETE FROM categories")
     suspend fun deleteAllCategories()
+
+    @Query(
+        """
+    SELECT c.*
+    FROM categories c
+    INNER JOIN products p ON p.categoryId = c.id
+    WHERE p.id = :productId
+    LIMIT 1
+"""
+    )
+    suspend fun getCategoryByProductId(productId: String): CategoryEntity?
 }

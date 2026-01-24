@@ -35,7 +35,7 @@ fun BottomNavigationBar(
     ) {
         NavigationDestination.items.forEach { destination ->
             val isSelected =
-                currentRouteString?.startsWith(destination.route::class.qualifiedName ?: "") == true
+                currentRouteString?.startsWith(destination.route::class.qualifiedName.orEmpty()) == true
 
             NavigationBarItem(
                 selected = isSelected,
