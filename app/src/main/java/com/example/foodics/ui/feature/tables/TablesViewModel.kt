@@ -165,8 +165,19 @@ class TablesViewModel(
     override fun onViewOrderClick() {
         tryToCall(
             block = { productUseCaseManager.clearCartProducts() },
+            onSuccess = { clearProductSelections() },
             onError = ::handleError
         )
+    }
+
+    private fun clearProductSelections() {
+        updateState {
+            it.copy(
+                products = it.products.map { product ->
+                    product.copy(inCart = false)
+                }
+            )
+        }
     }
 
     private fun handleError(throwable: Throwable) {

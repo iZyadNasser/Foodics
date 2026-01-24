@@ -33,7 +33,10 @@ fun CategoryTabs(
         divider = { },
         indicator = {
             TabRowDefaults.PrimaryIndicator(
-                Modifier.tabIndicatorOffset(selectedCategoryIndex, matchContentSize = true),
+                modifier = Modifier.tabIndicatorOffset(
+                    selectedCategoryIndex,
+                    matchContentSize = true
+                ),
                 width = Dp.Unspecified,
                 color = PrimaryPurple
             )

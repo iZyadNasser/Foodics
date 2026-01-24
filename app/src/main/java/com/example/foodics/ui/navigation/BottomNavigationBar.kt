@@ -31,7 +31,7 @@ fun BottomNavigationBar(
     NavigationBar(
         modifier = modifier
             .padding(horizontal = 16.dp),
-        containerColor = Color.White,
+        containerColor = Color.Transparent,
     ) {
         NavigationDestination.items.forEach { destination ->
             val isSelected =
@@ -54,13 +54,18 @@ fun BottomNavigationBar(
                         Icon(
                             imageVector = destination.icon,
                             contentDescription = stringResource(destination.title),
-                            tint = if (isSelected) Color.Black else Color.Gray,
+                            tint = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
+                                0.5f
+                            ),
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
                             text = stringResource(destination.title),
                             style = MaterialTheme.typography.labelSmall,
                             textAlign = TextAlign.Center,
+                            color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
+                                0.5f
+                            ),
                             maxLines = 1
                         )
                     }
