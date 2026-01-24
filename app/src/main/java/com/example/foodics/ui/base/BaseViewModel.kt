@@ -3,6 +3,8 @@ package com.example.foodics.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,7 +24,7 @@ abstract class BaseViewModel<State, Effect>(
     private val _effect = MutableSharedFlow<Effect>()
     val effect = _effect.throttleFirst(THROTTLE_WINDOW_DURATION)
 
-    fun updateState(transform: (State) -> State) {
+    protected fun updateState(transform: (State) -> State) {
         _screenState.update { transform(it) }
     }
 
@@ -38,15 +40,20 @@ abstract class BaseViewModel<State, Effect>(
         }
     }
 
-    protected fun <R> tryToCall(
+    protected fun <R> tryToExecute(
         block: suspend () -> R,
         onSuccess: suspend (R) -> Unit = {},
-        onError: suspend (Throwable) -> Unit = {},
+        onError: (Throwable) -> Unit = {},
         onStart: suspend () -> Unit = {},
         onEnd: suspend () -> Unit = {},
-        dispatcher: CoroutineDispatcher = Dispatchers.IO
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        scope: CoroutineScope = viewModelScope
     ): Job {
-        return viewModelScope.launch(dispatcher) {
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            onError(Exception())
+        }
+
+        return scope.launch(dispatcher + exceptionHandler) {
             onStart()
             try {
                 val result = block()
