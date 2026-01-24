@@ -25,25 +25,15 @@ class ProductRepositoryImpl(
         categoryId: UUID,
         isFirstFetch: Boolean
     ): List<Product> {
-        val products = if (isFirstFetch) {
+        if (isFirstFetch) {
             fetchRemoteProductsAsEntities()
-            productDao.getProductsByCategoryAndSearch(
-                categoryId = categoryId.toString(),
-                searchQuery = searchQuery.orEmpty()
-            )
-        } else {
-            productDao.getProductsByCategoryAndSearch(
-                categoryId = categoryId.toString(),
-                searchQuery = searchQuery.orEmpty()
-            )
         }
 
-        return products.map { product ->
-            val category = categoryDao.getAllCategories()
-                .first { it.id == product.categoryId }
-            val inCart = cartDao.getCartItem(productId = product.id) != null
-            product.toDomain(category.toDomain(), inCart)
-        }
+        return productDao.getProductsByCategoryAndSearch(
+            categoryId = categoryId.toString(),
+            searchQuery = searchQuery.orEmpty()
+        ).map { product -> product.toDomainWithExtraInfo() }
+
     }
 
     private suspend fun fetchRemoteProductsAsEntities(): List<ProductEntity> {
@@ -52,6 +42,12 @@ class ProductRepositoryImpl(
                 .map { it.toProductEntity() }
                 .also { productDao.insertProducts(it) }
         }
+    }
+
+    private suspend fun ProductEntity.toDomainWithExtraInfo(): Product {
+        val category = categoryDao.getCategoryByProductId(this.id)
+        val inCart = cartDao.getCartItem(productId = this.id) != null
+        return this.toDomain(category!!.toDomain(), inCart)
     }
 
     override suspend fun toggleProductInCart(product: Product): Boolean {
