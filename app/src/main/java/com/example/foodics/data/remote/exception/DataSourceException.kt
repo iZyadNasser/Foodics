@@ -5,6 +5,7 @@ sealed class DataSourceException(val errorMessage: String = "") : RuntimeExcepti
 // API-Specific
 sealed class ApiErrorException(errorMessage: String = "") : DataSourceException(errorMessage)
 class BadRequestException(errorMessage: String = "") : ApiErrorException(errorMessage)
+class UnauthorizedApiException(errorMessage: String = "") : ApiErrorException(errorMessage)
 class ForbiddenException(errorMessage: String = "") : ApiErrorException(errorMessage)
 class NotFoundException(errorMessage: String = "") : ApiErrorException(errorMessage)
 class ServerException(errorMessage: String = "") : ApiErrorException(errorMessage)
