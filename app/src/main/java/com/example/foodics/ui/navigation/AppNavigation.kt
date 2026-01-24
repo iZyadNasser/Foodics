@@ -24,22 +24,22 @@ fun AppNavigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = NavigationDestination.Tables.route,
+            startDestination = Route.Tables,
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())
         ) {
-            composable(NavigationDestination.Tables.route) {
+            composable<Route.Tables> {
                 TablesRoot()
             }
 
-            composable(NavigationDestination.Orders.route) {
+            composable<Route.Orders> {
                 OrdersScreen()
             }
 
-            composable(NavigationDestination.Menu.route) {
+            composable<Route.Menu> {
                 MenuScreen()
             }
 
-            composable(NavigationDestination.Settings.route) {
+            composable<Route.Settings> {
                 SettingsScreen()
             }
         }

@@ -26,7 +26,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRouteString = navBackStackEntry?.destination?.route
 
     NavigationBar(
         modifier = modifier
@@ -34,12 +34,13 @@ fun BottomNavigationBar(
         containerColor = Color.White,
     ) {
         NavigationDestination.items.forEach { destination ->
-            val isSelected = currentRoute == destination.route
+            val isSelected =
+                currentRouteString?.startsWith(destination.route::class.qualifiedName ?: "") == true
 
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
-                    if (currentRoute != destination.route) {
+                    if (isSelected.not()) {
                         navController.navigate(destination.route) {
                             popUpTo(NavigationDestination.Tables.route)
                             launchSingleTop = true

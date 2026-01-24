@@ -10,30 +10,30 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.foodics.R
 
 sealed class NavigationDestination(
-    val route: String,
+    val route: Route,
     @StringRes val title: Int,
     val icon: ImageVector,
 ) {
     data object Tables : NavigationDestination(
-        route = "tables",
+        route = Route.Tables,
         title = R.string.tables,
         icon = Icons.Default.Restaurant,
     )
 
     data object Orders : NavigationDestination(
-        route = "orders",
+        route = Route.Orders,
         title = R.string.orders,
         icon = Icons.AutoMirrored.Filled.MenuBook,
     )
 
     data object Menu : NavigationDestination(
-        route = "menu",
+        route = Route.Menu,
         title = R.string.menu,
         icon = Icons.Default.RestaurantMenu
     )
 
     data object Settings : NavigationDestination(
-        route = "settings",
+        route = Route.Settings,
         title = R.string.settings,
         icon = Icons.Default.Settings
     )
