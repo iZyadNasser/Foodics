@@ -9,4 +9,5 @@ data class Product(
     val description: String?,
     val imageUrl: String,
     val price: Double,
+    val inCart: Boolean,
 )

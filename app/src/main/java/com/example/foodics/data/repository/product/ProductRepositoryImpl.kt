@@ -41,7 +41,8 @@ class ProductRepositoryImpl(
         return products.map { product ->
             val category = categoryDao.getAllCategories()
                 .first { it.id == product.categoryId }
-            product.toDomain(category.toDomain())
+            val inCart = cartDao.getCartItem(productId = product.id) != null
+            product.toDomain(category.toDomain(), inCart)
         }
     }
 
@@ -53,14 +54,16 @@ class ProductRepositoryImpl(
         }
     }
 
-    override suspend fun toggleProductInCart(product: Product) {
+    override suspend fun toggleProductInCart(product: Product): Boolean {
         val productId = product.id.toString()
         val existingCartItem = cartDao.getCartItem(productId)
 
-        if (existingCartItem != null) {
+        return if (existingCartItem != null) {
             cartDao.deleteCartItem(productId)
+            false
         } else {
             cartDao.insertCartItem(CartItemEntity(productId = productId))
+            true
         }
     }
 

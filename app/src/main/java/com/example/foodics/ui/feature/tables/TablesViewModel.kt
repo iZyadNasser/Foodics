@@ -146,9 +146,20 @@ class TablesViewModel(
                 screenState.value.products.find { it.id == productId }
                     ?.let { productUseCaseManager.toggleProductInCart(it) } ?: false
             },
-            onSuccess = { sendEffect(TablesScreenEffect.ShowCartUpdatedSuccess) },
+            onSuccess = { handleProductToggleSuccess(productId = productId, isAdded = it) },
             onError = ::handleError
         )
+    }
+
+    private fun handleProductToggleSuccess(productId: UUID, isAdded: Boolean) {
+        sendEffect(TablesScreenEffect.ShowCartUpdatedSuccess)
+        updateState {
+            it.copy(
+                products = it.products.map { product ->
+                    if (product.id == productId) product.copy(inCart = isAdded) else product
+                }
+            )
+        }
     }
 
     override fun onViewOrderClick() {

@@ -6,7 +6,8 @@ import com.example.foodics.domain.entity.Product
 import java.util.UUID
 
 fun ProductEntity.toDomain(
-    category: Category
+    category: Category,
+    inCart: Boolean
 ): Product {
     return Product(
         id = UUID.fromString(this.id),
@@ -14,6 +15,7 @@ fun ProductEntity.toDomain(
         category = category,
         description = this.description,
         imageUrl = this.imageUrl,
-        price = this.price
+        price = this.price,
+        inCart = inCart
     )
 }

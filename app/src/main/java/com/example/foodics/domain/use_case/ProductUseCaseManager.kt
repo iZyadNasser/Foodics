@@ -19,7 +19,7 @@ class ProductUseCaseManager(
         )
     }
 
-    suspend fun toggleProductInCart(product: Product) =
+    suspend fun toggleProductInCart(product: Product): Boolean =
         productRepository.toggleProductInCart(product)
 
     suspend fun clearCartProducts() = productRepository.clearCartProducts()
