@@ -7,4 +7,3 @@ class ServerSideException(errorMessage: String = "") : AppException(errorMessage
 class UnauthorizedException(errorMessage: String = "") : AppException(errorMessage)
 class NoInternetException(errorMessage: String = "") : AppException(errorMessage)
 class ImplementationException(errorMessage: String = "") : AppException(errorMessage)
-class UnknownException(errorMessage: String = "") : AppException(errorMessage)

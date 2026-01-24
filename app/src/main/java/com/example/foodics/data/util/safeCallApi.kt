@@ -9,7 +9,6 @@ import com.example.foodics.data.remote.exception.IOConnectionException
 import com.example.foodics.data.remote.exception.NotFoundException
 import com.example.foodics.data.remote.exception.ServerException
 import com.example.foodics.data.remote.exception.UnauthorizedApiException
-import com.example.foodics.data.remote.exception.UnknownErrorException
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
@@ -29,7 +28,7 @@ internal suspend inline fun <reified T> tryToCallApi(
         throw DataSerializationException(e.message ?: "")
     } catch (e: Exception) {
         currentCoroutineContext().ensureActive()
-        throw UnknownErrorException(e.message ?: "")
+        throw e
     }
 
     try {
@@ -58,7 +57,7 @@ private suspend inline fun <reified T> responseToException(
             403 -> throw ForbiddenException(result.message ?: "")
             404 -> throw NotFoundException(result.message ?: "")
             in 500..599 -> throw ServerException(result.message ?: "")
-            else -> throw UnknownErrorException(result.message ?: "")
+            else -> throw Exception(result.message ?: "")
         }
     }
 }
