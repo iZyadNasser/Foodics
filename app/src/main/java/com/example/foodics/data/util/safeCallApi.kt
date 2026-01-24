@@ -23,9 +23,9 @@ internal suspend inline fun <reified T> tryToCallApi(
     val response = try {
         call()
     } catch (e: UnresolvedAddressException) {
-        throw IOConnectionException(e.message ?: "")
+        throw IOConnectionException(e.message.orEmpty())
     } catch (e: SerializationException) {
-        throw DataSerializationException(e.message ?: "")
+        throw DataSerializationException(e.message.orEmpty())
     } catch (e: Exception) {
         currentCoroutineContext().ensureActive()
         throw e
@@ -52,12 +52,12 @@ private suspend inline fun <reified T> responseToException(
         val result = response.body<BaseNetworkError>()
 
         when (response.status.value) {
-            400 -> throw BadRequestException(result.message ?: "")
-            401 -> throw UnauthorizedApiException(result.message ?: "")
-            403 -> throw ForbiddenException(result.message ?: "")
-            404 -> throw NotFoundException(result.message ?: "")
-            in 500..599 -> throw ServerException(result.message ?: "")
-            else -> throw Exception(result.message ?: "")
+            400 -> throw BadRequestException(result.message.orEmpty())
+            401 -> throw UnauthorizedApiException(result.message.orEmpty())
+            403 -> throw ForbiddenException(result.message.orEmpty())
+            404 -> throw NotFoundException(result.message.orEmpty())
+            in 500..599 -> throw ServerException(result.message.orEmpty())
+            else -> throw Exception(result.message.orEmpty())
         }
     }
 }

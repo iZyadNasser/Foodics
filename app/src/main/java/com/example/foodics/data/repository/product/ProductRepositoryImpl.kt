@@ -29,12 +29,12 @@ class ProductRepositoryImpl(
             fetchRemoteProductsAsEntities()
             productDao.getProductsByCategoryAndSearch(
                 categoryId = categoryId.toString(),
-                searchQuery = searchQuery ?: ""
+                searchQuery = searchQuery.orEmpty()
             )
         } else {
             productDao.getProductsByCategoryAndSearch(
                 categoryId = categoryId.toString(),
-                searchQuery = searchQuery ?: ""
+                searchQuery = searchQuery.orEmpty()
             )
         }
 
