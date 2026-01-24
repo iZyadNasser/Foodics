@@ -8,7 +8,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ abstract class BaseViewModel<State, Effect>(
     val screenState: StateFlow<State> = _screenState.asStateFlow()
 
     private val _effect = MutableSharedFlow<Effect>()
-    val effect = _effect.asSharedFlow()
+    val effect = _effect.throttleFirst(THROTTLE_WINDOW_DURATION)
 
     fun updateState(transform: (State) -> State) {
         _screenState.update { transform(it) }
@@ -57,5 +56,9 @@ abstract class BaseViewModel<State, Effect>(
             }
             onEnd()
         }
+    }
+
+    companion object {
+        private const val THROTTLE_WINDOW_DURATION = 800L
     }
 }
