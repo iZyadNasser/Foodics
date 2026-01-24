@@ -27,13 +27,15 @@ class ProductRepositoryImpl(
     ): List<Product> {
         val products = if (isFirstFetch) {
             fetchRemoteProductsAsEntities()
+            productDao.getProductsByCategoryAndSearch(
+                categoryId = categoryId.toString(),
+                searchQuery = searchQuery ?: ""
+            )
         } else {
             productDao.getProductsByCategoryAndSearch(
                 categoryId = categoryId.toString(),
                 searchQuery = searchQuery ?: ""
-            ).ifEmpty {
-                fetchRemoteProductsAsEntities()
-            }
+            )
         }
 
         return products.map { product ->

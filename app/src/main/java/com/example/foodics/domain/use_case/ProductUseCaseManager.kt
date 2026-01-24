@@ -12,7 +12,11 @@ class ProductUseCaseManager(
         categoryId: UUID,
         isFirstFetch: Boolean = false
     ): List<Product> {
-        return productRepository.getProducts(searchQuery = searchQuery, categoryId = categoryId)
+        return productRepository.getProducts(
+            searchQuery = searchQuery,
+            categoryId = categoryId,
+            isFirstFetch = isFirstFetch
+        )
     }
 
     suspend fun toggleProductInCart(product: Product) =
