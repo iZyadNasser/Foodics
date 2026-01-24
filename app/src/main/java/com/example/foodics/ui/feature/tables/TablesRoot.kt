@@ -3,6 +3,7 @@ package com.example.foodics.ui.feature.tables
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.foodics.R
 import com.example.foodics.ui.LocalErrorAlert
@@ -20,6 +21,7 @@ fun TablesRoot(
     val successAlertState = LocalSuccessAlert.current
 
     val context = LocalContext.current
+    val cartUpdatedText = stringResource(R.string.cart_updated)
 
     ObserveAsEffect(viewModel.effect) { effect ->
         when (effect) {
@@ -28,7 +30,7 @@ fun TablesRoot(
             }
 
             TablesScreenEffect.ShowCartUpdatedSuccess -> {
-                successAlertState.show(context.getString(R.string.cart_updated))
+                successAlertState.show(cartUpdatedText)
             }
         }
     }
