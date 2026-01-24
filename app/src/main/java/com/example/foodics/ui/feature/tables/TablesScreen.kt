@@ -1,6 +1,7 @@
 package com.example.foodics.ui.feature.tables
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Group
@@ -28,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,7 +41,6 @@ import com.example.foodics.ui.component.ProductCard
 import com.example.foodics.ui.component.SearchBar
 import com.example.foodics.ui.component.TopUserBar
 import com.example.foodics.ui.component.ViewOrderButton
-import com.example.foodics.ui.component.modifier.noRippleClickable
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,12 +128,16 @@ private fun TablesTopBar(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(R.string.back),
-                modifier = Modifier.noRippleClickable(onBackClick)
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(32.dp)
+                    .clickable(onClick = onBackClick)
+                    .padding(4.dp)
             )
 
             Text(
