@@ -9,7 +9,6 @@ class UnauthorizedApiException(errorMessage: String = "") : ApiErrorException(er
 class ForbiddenException(errorMessage: String = "") : ApiErrorException(errorMessage)
 class NotFoundException(errorMessage: String = "") : ApiErrorException(errorMessage)
 class ServerException(errorMessage: String = "") : ApiErrorException(errorMessage)
-class UnknownApiErrorException(errorMessage: String = "") : ApiErrorException(errorMessage)
 
 // General
 class DataSerializationException(errorMessage: String = "") : DataSourceException(errorMessage)
