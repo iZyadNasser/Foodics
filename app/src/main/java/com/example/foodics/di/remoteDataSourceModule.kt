@@ -13,7 +13,6 @@ import org.koin.dsl.module
 val remoteDataSourceModule = module {
     single { KtorClientProvider.createHttpClient() }
     single(named("apiBaseUrl")) { "https://api.mockaroo.com" }
-    single(named("apiNumber")) { "7f2d9600" }
     single(named("apiKey")) { "b418af70" }
     singleOf(::CategoryRemoteDataSourceImpl) bind CategoryRemoteDataSource::class
     singleOf(::ProductRemoteDataSourceImpl) bind ProductRemoteDataSource::class

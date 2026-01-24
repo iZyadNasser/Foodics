@@ -9,8 +9,7 @@ fun constructUrl(
     val newPath = if (path.startsWith("/")) path else "/$path"
 
     val baseUrl: String by inject(String::class.java, qualifier = named("apiBaseUrl"))
-    val apiNumber: String by inject(String::class.java, qualifier = named("apiNumber"))
     val apiKey: String by inject(String::class.java, qualifier = named("apiKey"))
 
-    return "$baseUrl/api$newPath/$apiNumber?key=$apiKey"
+    return "$baseUrl/api$newPath?key=$apiKey"
 }
