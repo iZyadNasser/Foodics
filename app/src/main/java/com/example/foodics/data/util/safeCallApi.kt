@@ -8,6 +8,7 @@ import com.example.foodics.data.remote.exception.ForbiddenException
 import com.example.foodics.data.remote.exception.IOConnectionException
 import com.example.foodics.data.remote.exception.NotFoundException
 import com.example.foodics.data.remote.exception.ServerException
+import com.example.foodics.data.remote.exception.UnauthorizedApiException
 import com.example.foodics.data.remote.exception.UnknownErrorException
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
@@ -53,6 +54,7 @@ private suspend inline fun <reified T> responseToException(
 
         when (response.status.value) {
             400 -> throw BadRequestException(result.message ?: "")
+            401 -> throw UnauthorizedApiException(result.message ?: "")
             403 -> throw ForbiddenException(result.message ?: "")
             404 -> throw NotFoundException(result.message ?: "")
             in 500..599 -> throw ServerException(result.message ?: "")

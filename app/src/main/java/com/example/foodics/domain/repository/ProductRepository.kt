@@ -10,7 +10,11 @@ interface ProductRepository {
         categoryId: UUID,
         isFirstFetch: Boolean = false
     ): List<Product>
-    suspend fun toggleProductInCart(product: Product)
+
+    /**
+     * @return true if the product is now in cart (after the operation succeeded), false otherwise
+     */
+    suspend fun toggleProductInCart(product: Product): Boolean
     suspend fun clearCartProducts()
     fun getProductsCountInCart(): Flow<Int>
     fun getTotalProductsPriceInCart(): Flow<Double>

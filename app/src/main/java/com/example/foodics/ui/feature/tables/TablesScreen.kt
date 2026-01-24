@@ -1,5 +1,6 @@
 package com.example.foodics.ui.feature.tables
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.example.foodics.R
 import com.example.foodics.domain.entity.Product
 import com.example.foodics.ui.component.CategoryTabs
+import com.example.foodics.ui.component.EmptyState
 import com.example.foodics.ui.component.ProductCard
 import com.example.foodics.ui.component.SearchBar
 import com.example.foodics.ui.component.TopUserBar
@@ -97,19 +99,27 @@ fun TablesScreen(
                 )
             }
 
-            if (screenState.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
+            AnimatedContent(screenState.isLoading) { isLoading ->
+                if (isLoading) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                } else {
+                    AnimatedContent(screenState.products.isEmpty()) { isEmpty ->
+                        if (isEmpty) {
+                            EmptyState()
+                        } else {
+                            ProductGrid(
+                                products = screenState.products,
+                                onProductClick = interactionListener::onProductClick,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
                 }
-            } else {
-                ProductGrid(
-                    products = screenState.products,
-                    onProductClick = interactionListener::onProductClick,
-                    modifier = Modifier.fillMaxSize()
-                )
             }
         }
     }

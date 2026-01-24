@@ -26,20 +26,21 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    val currentRouteString = navBackStackEntry?.destination?.route
 
     NavigationBar(
         modifier = modifier
             .padding(horizontal = 16.dp),
-        containerColor = Color.White,
+        containerColor = Color.Transparent,
     ) {
         NavigationDestination.items.forEach { destination ->
-            val isSelected = currentRoute == destination.route
+            val isSelected =
+                currentRouteString?.startsWith(destination.route::class.qualifiedName ?: "") == true
 
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
-                    if (currentRoute != destination.route) {
+                    if (isSelected.not()) {
                         navController.navigate(destination.route) {
                             popUpTo(NavigationDestination.Tables.route)
                             launchSingleTop = true
@@ -53,13 +54,18 @@ fun BottomNavigationBar(
                         Icon(
                             imageVector = destination.icon,
                             contentDescription = stringResource(destination.title),
-                            tint = if (isSelected) Color.Black else Color.Gray,
+                            tint = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
+                                0.5f
+                            ),
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
                             text = stringResource(destination.title),
                             style = MaterialTheme.typography.labelSmall,
                             textAlign = TextAlign.Center,
+                            color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
+                                0.5f
+                            ),
                             maxLines = 1
                         )
                     }
