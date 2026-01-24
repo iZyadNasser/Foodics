@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 class TablesViewModel(
-    val getCategoriesUseCase: GetCategoriesUseCase,
-    val productUseCaseManager: ProductUseCaseManager,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val productUseCaseManager: ProductUseCaseManager,
 ) : BaseViewModel<TablesScreenState, TablesScreenEffect>(TablesScreenState()),
     TablesInteractionListener {
 
@@ -35,7 +35,7 @@ class TablesViewModel(
     }
 
     private fun getCategories(callback: () -> Unit) {
-        tryToCall(
+        tryToExecute(
             block = {
                 getCategoriesUseCase(
                     isFirstFetch = screenState.value.isFirstFetch,
@@ -72,7 +72,7 @@ class TablesViewModel(
     }
 
     private fun getProducts() {
-        tryToCall(
+        tryToExecute(
             block = {
                 screenState.value.chosenCategoryId?.let { categoryId ->
                     productUseCaseManager.getProducts(
@@ -141,7 +141,7 @@ class TablesViewModel(
     }
 
     override fun onProductClick(productId: UUID) {
-        tryToCall(
+        tryToExecute(
             block = {
                 screenState.value.products.find { it.id == productId }
                     ?.let { productUseCaseManager.toggleProductInCart(it) } ?: false
@@ -163,7 +163,7 @@ class TablesViewModel(
     }
 
     override fun onViewOrderClick() {
-        tryToCall(
+        tryToExecute(
             block = { productUseCaseManager.clearCartProducts() },
             onSuccess = { clearProductSelections() },
             onError = ::handleError
